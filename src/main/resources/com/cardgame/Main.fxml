@@ -17,7 +17,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <VBox alignment="TOP_CENTER" prefHeight="650.0" prefWidth="650.0" style="-fx-background-color: #fcefd1;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cardgame.controller.StateController">
    <children>
       <HBox alignment="TOP_CENTER" prefHeight="514.0" prefWidth="650.0">
@@ -235,7 +234,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                   </Button>
-                  <Button alignment="CENTER" layoutX="31.0" layoutY="239.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #2fce66;" text="LOAD" textAlignment="CENTER">
+                  <Button alignment="CENTER" layoutX="31.0" layoutY="239.0" mnemonicParsing="false" onAction="#load" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #2fce66;" text="LOAD" textAlignment="CENTER">
                      <VBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
@@ -249,35 +248,14 @@
             </VBox>
          </children>
       </HBox>
-      <HBox alignment="CENTER" prefHeight="142.0" prefWidth="650.0" spacing="10.0">
+      <HBox alignment="CENTER" prefHeight="142.0" prefWidth="650.0">
          <children>
-            <StackPane>
+            <StackPane prefHeight="119.0" prefWidth="481.0">
                <HBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </HBox.margin>
                <children>
-                  <GridPane hgap="5.0">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="78.0" prefWidth="78.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="78.0" prefWidth="78.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="78.0" prefWidth="78.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="78.0" prefWidth="78.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="78.0" prefWidth="78.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="78.0" prefWidth="78.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints minHeight="110.0" prefHeight="110.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                     <children>
-                        <Pane prefHeight="110.0" prefWidth="78.0" style="-fx-border-color: #000000; -fx-border-radius: 10; -fx-background-radius: 10; -fx-background-size: 10;" />
-                        <Pane layoutX="10.0" layoutY="10.0" prefHeight="110.0" prefWidth="78.0" style="-fx-border-color: #000000; -fx-border-radius: 10; -fx-background-radius: 10; -fx-background-size: 10;" GridPane.columnIndex="1" />
-                        <Pane layoutX="10.0" layoutY="10.0" prefHeight="110.0" prefWidth="78.0" style="-fx-border-color: #000000; -fx-border-radius: 10; -fx-background-radius: 10; -fx-background-size: 10;" GridPane.columnIndex="2" />
-                        <Pane layoutX="10.0" layoutY="10.0" prefHeight="110.0" prefWidth="78.0" style="-fx-border-color: #000000; -fx-border-radius: 10; -fx-background-radius: 10; -fx-background-size: 10;" GridPane.columnIndex="3" />
-                        <Pane layoutX="10.0" layoutY="10.0" prefHeight="110.0" prefWidth="78.0" style="-fx-border-color: #000000; -fx-border-radius: 10; -fx-background-radius: 10; -fx-background-size: 10;" GridPane.columnIndex="4" />
-                        <Pane layoutX="10.0" layoutY="10.0" prefHeight="110.0" prefWidth="78.0" style="-fx-border-color: #000000; -fx-border-radius: 10; -fx-background-radius: 10; -fx-background-size: 10;" GridPane.columnIndex="5" />
-                     </children>
-                  </GridPane>
-                  <GridPane fx:id="activedeck" hgap="5.0" layoutX="10.0" layoutY="10.0">
+                  <GridPane fx:id="activedeck" alignment="CENTER" hgap="3.0" layoutX="10.0" layoutY="10.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="78.0" prefWidth="78.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="78.0" prefWidth="78.0" />
@@ -292,7 +270,7 @@
                   </GridPane>
                </children>
             </StackPane>
-            <StackPane>
+            <StackPane prefHeight="139.0" prefWidth="157.0">
                <children>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f6de7e" height="110.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="OUTSIDE" strokeWidth="2.0" width="78.0" />
                   <Text fx:id="n_deck" strokeType="OUTSIDE" strokeWidth="0.0" text="DECK 20/20" textAlignment="CENTER" wrappingWidth="60.0">

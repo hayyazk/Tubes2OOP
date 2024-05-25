@@ -41,13 +41,17 @@ public class Plant extends Card implements Harvestable {
         return product;
     }
 
-    public void setAge(int age) {
-        if (age >= this.ageToHarvest) {
+    public void alterImage() {
+        if (alteredAge() >= this.ageToHarvest) {
             this.img = CardFactory.createProduct(this.product).getImage();
         } else {
             this.img = CardFactory.createPlant(this.kode).getImage();
         }
-        this.age = age;
+    }
+
+    public void setAge(int age) {
+        this.age = Math.max(age, 0);
+        alterImage();
     }
     public void setItems(ArrayList<String> items) {
         this.items = items;
@@ -57,6 +61,7 @@ public class Plant extends Card implements Harvestable {
         ArrayList<String> a = new ArrayList<>(this.getItems());
         a.add(item);
         this.setItems(a);
+        alterImage();
     }
 
     public String harvest() {
@@ -74,6 +79,10 @@ public class Plant extends Card implements Harvestable {
     @Override
     public boolean hasTrap() {
         return this.items.contains("TRAP");
+    }
+
+    public int alteredAge() {
+        return Math.max(getAge() + 2*countItem("ACCELERATE") - 2*countItem("DELAY"), 0);
     }
 
     private int countItem(String item) {
@@ -110,7 +119,7 @@ public class Plant extends Card implements Harvestable {
 
     @Override
     public String getDetails() {
-        return String.format("Umur: %d [%d until harvest]\nItems: %s\nHasil panen: %s",
-                this.age, Math.max(0, this.ageToHarvest-this.age), this.getItemDetails(), this.product);
+        return String.format("Umur: %d (%d) [%d until harvest]\nItems: %s\nHasil panen: %s",
+                this.age, alteredAge(), Math.max(0, this.ageToHarvest-this.age), this.getItemDetails(), this.product);
     }
 }

@@ -26,6 +26,26 @@ public class Deck {
             this.deck.add(getRandom(CardFactory.itemNames()));
         }
     }
+    public Deck(int n) {
+        this.deck = new ArrayList<>(n);
+
+        for (int i = 0; i < Math.round(n*0.25); i++) {
+            String card = getRandom(CardFactory.animalNames());
+            while (card.equals("BERUANG")) {
+                card = getRandom(CardFactory.animalNames());
+            }
+            this.deck.add(card);
+        }
+        for (int i = 0; i < Math.round(n*0.25); i++) {
+            this.deck.add(getRandom(CardFactory.plantNames()));
+        }
+        for (int i = 0; i < Math.round(n*0.25); i++) {
+            this.deck.add(getRandom(CardFactory.productNames()));
+        }
+        for (int i = 0; i < Math.round(n*0.25); i++) {
+            this.deck.add(getRandom(CardFactory.itemNames()));
+        }
+    }
     public Deck(Deck other) {
         this.deck = other.getDeck();
     }

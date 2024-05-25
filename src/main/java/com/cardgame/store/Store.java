@@ -17,6 +17,9 @@ public class Store {
         Integer n = this.products.get(name) + 1;
         this.products.put(name, n);
     }
+    public void setAmount(String name, int amount) {
+        this.products.put(name, amount);
+    }
     public void remove(String name) {
         Integer n = this.products.get(name) - 1;
         this.products.put(name, n);

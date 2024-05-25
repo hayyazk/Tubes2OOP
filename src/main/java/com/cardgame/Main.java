@@ -19,11 +19,11 @@ public class Main extends Application{
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Main.fxml"));
         Parent root = fxmlLoader.load();
         stateController = fxmlLoader.getController();
-        stateController.setState(new State());
         stateController.updateState();
         stateController.initDragDrop();
         stage.setTitle("KelolaKerajaan");
         stage.setScene(new Scene(root));
+        stateController.showShuffle();
     }
     public static void main(String[] args) {
         launch();

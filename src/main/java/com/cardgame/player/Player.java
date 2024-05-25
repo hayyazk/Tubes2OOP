@@ -31,7 +31,9 @@ public class Player {
         this.activeDeck  = new ActiveDeck(activeDeck);
         this.ladang = new Ladang(ladang);
     }
-
+    public void setDeck(Deck deck) {
+        this.deck = deck;
+    }
     public String getName() {
         return name;
     }
@@ -109,8 +111,5 @@ public class Player {
     }
     public void agePlants() {
         this.ladang.agePlants();
-    }
-    public void addItem(String key) {
-
     }
 }

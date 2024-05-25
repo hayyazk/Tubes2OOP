@@ -9,10 +9,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Tab;
+import javafx.scene.control.*;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
@@ -44,7 +41,7 @@ public class StateController {
 
     @FXML
     public void initialize() {
-        this.n_deck.setText("20/20");
+        this.state = new State();
     }
 
     @FXML
@@ -62,8 +59,11 @@ public class StateController {
 
     @FXML
     public void save() {
-        this.state.saveState();
-        this.state.savePlayers();
+        TextInputDialog td = new TextInputDialog();
+        td.setTitle("Save State");
+        td.setHeaderText(null);
+        td.showAndWait();
+        this.state.save(td.getEditor().getText());
     }
 
     public void initDragDrop() {

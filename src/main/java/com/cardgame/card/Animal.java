@@ -39,14 +39,14 @@ public class Animal extends Card implements Harvestable {
     public String getAnimalType() {return animalType;}
     public ArrayList<String> getItems() {return items;}
     public void setWeight(int weight) {
-        this.weight = weight;
+        this.weight = Math.max(weight, 0);
     }
 
     public String harvest() {
         return this.product;
     }
     public boolean readyToHarvest() {
-        return this.weight >= this.weightToHarvest;
+        return alteredWeight() >= this.weightToHarvest;
     }
     public void feed(Product product) {
         this.setWeight(this.getWeight()+product.getAddsWeight());
@@ -69,6 +69,10 @@ public class Animal extends Card implements Harvestable {
     @Override
     public boolean hasTrap() {
         return this.items.contains("TRAP");
+    }
+
+    public int alteredWeight() {
+        return Math.max(getWeight() + 8*countItem("ACCELERATE") - 5*countItem("DELAY"), 0);
     }
 
     private int countItem(String item) {
@@ -105,7 +109,7 @@ public class Animal extends Card implements Harvestable {
 
     @Override
     public String getDetails() {
-        return String.format("Berat: %d [%d until harvest]\nItems: %s\nHasil panen: %s",
-                this.weight, Math.max(0, this.weightToHarvest-this.weight), this.getItemDetails(), this.product);
+        return String.format("Berat: %d (%d) [%d until harvest]\nItems: %s\nHasil panen: %s",
+                this.weight, alteredWeight(), Math.max(0, this.weightToHarvest-this.weight), this.getItemDetails(), this.product);
     }
 }

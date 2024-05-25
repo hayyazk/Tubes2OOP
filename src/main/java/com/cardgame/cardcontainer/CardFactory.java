@@ -69,6 +69,8 @@ public class CardFactory {
                 "Produk/labu.png", "LABU", 500, 10, "HERBIVORE"));
         products.put("STROBERI", new Product("Stroberi",
                 "Produk/stroberi.png", "STROBERI", 350, 5, "HERBIVORE"));
+        products.put("DAGING_BERUANG", new Product("Daging Beruang",
+                "Produk/daging_beruang.png", "DAGING_BERUANG", 500, 12, "CARNIVORE"));
     }
 
     public static void setItems() {
