@@ -21,6 +21,7 @@ public class Main extends Application{
         stateController = fxmlLoader.getController();
         stateController.setState(new State());
         stateController.updateState();
+        stateController.initDragDrop();
         stage.setTitle("KelolaKerajaan");
         stage.setScene(new Scene(root));
     }

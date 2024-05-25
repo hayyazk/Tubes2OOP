@@ -33,9 +33,11 @@ public class Deck {
         this.deck = deck;
     }
 
-    public ArrayList<String> shuffle() {
+    public ArrayList<String> shuffle(int n) {
         ArrayList<String> shuffled = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
+        n = Math.min(n, 4);
+        n = Math.min(n, this.deck.size());
+        for (int i = 0; i < n; i++) {
             String res = getRandom(this.deck);
             shuffled.add(res);
             this.deck.remove(res);

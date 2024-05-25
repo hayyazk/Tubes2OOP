@@ -72,39 +72,39 @@ public class CardFactory {
     }
 
     public static void setItems() {
-        items.put("ACCELERATE", new Item("Accelerate", "Item/accelerate.png", "ACCELERATE"));
-        items.put("DELAY", new Item("Delay", "Item/delay.png", "DELAY"));
-        items.put("INSTANT_HARVEST", new Item("Instant Harvest", "Item/instant_harvest.png", "INSTANT_HARVEST"));
-        items.put("DESTROY", new Item("Destroy", "Item/destroy.png", "DESTROY"));
-        items.put("PROTECT", new Item("Protect", "Item/protect.png", "PROTECT"));
-        items.put("TRAP", new Item("Trap", "Item/trap.png", "TRAP"));
+        items.put("ACCELERATE", new Item("Accelerate", "Item/accelerate.png", "ACCELERATE", "+8 animal weight/+2 plant age"));
+        items.put("DELAY", new Item("Delay", "Item/delay.png", "DELAY", "-5 animal weight/-2 plant age"));
+        items.put("INSTANT_HARVEST", new Item("Instant Harvest", "Item/instant_harvest.png", "INSTANT_HARVEST", "Instantly harvest an animal/plant"));
+        items.put("DESTROY", new Item("Destroy", "Item/destroy.png", "DESTROY", "Destroy the enemy's animal/plant"));
+        items.put("PROTECT", new Item("Protect", "Item/protect.png", "PROTECT", "Protect animal/plant from destruction"));
+        items.put("TRAP", new Item("Trap", "Item/trap.png", "TRAP", "Trap bears"));
     }
 
     public static Animal createAnimal(String name) {
-        return animals.get(name);
+        return new Animal(animals.get(name));
     }
 
     public static Plant createPlant(String name) {
-        return plants.get(name);
+        return new Plant(plants.get(name));
     }
 
     public static Product createProduct(String name) {
-        return products.get(name);
+        return new Product(products.get(name));
     }
 
     public static Item createItem(String name) {
-        return items.get(name);
+        return new Item(items.get(name));
     }
 
     public static Card createCard(String name) {
         if (animals.containsKey(name)) {
-            return animals.get(name);
+            return new Animal(animals.get(name));
         } else if (plants.containsKey(name)) {
-            return plants.get(name);
+            return new Plant(plants.get(name));
         } else if (products.containsKey(name)) {
-            return products.get(name);
+            return new Product(products.get(name));
         } else if (items.containsKey(name)) {
-            return items.get(name);
+            return new Item(items.get(name));
         }
         return null;
     }

@@ -1,7 +1,5 @@
 package com.cardgame.card;
 
-import javafx.scene.image.Image;
-
 abstract public class Card {
     final private String name;
     protected String img;
@@ -26,7 +24,5 @@ abstract public class Card {
     public String getKode() {
         return kode;
     }
-    public void setImage(String image) {
-        this.img = image;
-    }
+    abstract public String getDetails();
 }

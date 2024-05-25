@@ -21,6 +21,10 @@ public class ActiveDeck {
         this.activeDeck = other.getActiveDeck();
     }
 
+    public int getAvailable() {
+        return size - this.activeDeck.size();
+    }
+
     public void add(ArrayList<String> card) {
         for (String c : card) {
             this.add(c);

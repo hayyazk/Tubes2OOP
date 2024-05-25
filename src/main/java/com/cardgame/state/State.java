@@ -1,31 +1,35 @@
 package com.cardgame.state;
 
 import com.cardgame.card.Card;
-import com.cardgame.card.Harvestable;
+import com.cardgame.card.Item;
 import com.cardgame.card.Product;
-import com.cardgame.cardcontainer.ActiveDeck;
 import com.cardgame.cardcontainer.CardFactory;
-import com.cardgame.cardcontainer.Deck;
-import com.cardgame.cardcontainer.Ladang;
 import com.cardgame.player.Player;
+import com.cardgame.store.Store;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class State {
-    private Player current_player, p1, p2;
+    private Player current_player, other_player, p1, p2;
     private int turn;
-    private String winner;
+    private Store store;
 
     public State() {
         CardFactory.init();
         this.p1 = new Player("Player 1");
         this.p2 = new Player("Player 2");
         this.current_player = p1;
+        this.other_player = p2;
         this.turn = 1;
+        this.store = new Store();
     }
 
     public Player getCurrentPlayer() {
         return current_player;
+    }
+    public Player getOtherPlayer() {
+        return other_player;
     }
     public Player getP1() {
         return p1;
@@ -33,56 +37,77 @@ public class State {
     public Player getP2() {
         return p2;
     }
+    public Store getStore() {
+        return store;
+    }
 
-    public ArrayList<String> shuffleDeck() {
-        return this.current_player.shuffleDeck();
+    public void deployItemSelf(String key, Item card, String deckKey) {
+        if (!card.getKode().equals("DELAY") && !card.getKode().equals("DESTROY")) {
+            boolean success = this.current_player.addToLadang(key, card);
+            if (success) {
+                this.current_player.removeFromActiveDeck(deckKey);
+            }
+        }
     }
-    public void addToDeck(ArrayList<String> list) {
-        this.current_player.addToDeck(list);
+
+    public void deployItemOther(String key, Item card, String deckKey) {
+        if (card.getKode().equals("DELAY") || card.getKode().equals("DESTROY")) {
+            boolean success = this.other_player.addToLadang(key, card);
+            if (success) {
+                this.current_player.removeFromActiveDeck(deckKey);
+            }
+        }
     }
-    public void addToActiveDeck(ArrayList<String> list) {
-        this.current_player.addToActiveDeck(list);
+
+    public void buy(String product) {
+        int price = CardFactory.createProduct(product).getPrice();
+        if (current_player.getMoney() >= price) {
+            this.current_player.addToActiveDeck(new ArrayList<>(List.of(product)));
+            this.store.remove(product);
+            this.current_player.setMoney(this.current_player.getMoney() - price);
+        }
     }
-    public void removeFromActiveDeck(String key) {
-        this.current_player.removeFromActiveDeck(key);
+
+    public void sell(String key) {
+        Card c = this.current_player.getActiveDeck().get(key);
+        if (c instanceof Product) {
+            this.store.add(c.getKode());
+            this.current_player.removeFromActiveDeck(key);
+            this.current_player.setMoney(this.current_player.getMoney() + ((Product) c).getPrice());
+        }
     }
-    public Card getFromActiveDeck(String key) {
-        return this.current_player.getActiveDeck().get(key);
-    }
-    public void addToLadang(String key, Harvestable card) {
-        this.current_player.addToLadang(key, card);
-    }
-    public void addToLadang(String key, Product card) {
-        this.current_player.addToLadang(key, card);
-    }
+
     public void harvest(String key) {
         this.current_player.harvest(key);
     }
     public void next() {
         this.turn++;
-        if (this.turn > 20) {
-            checkWin();
-        }
         this.p1.agePlants();
         this.p2.agePlants();
         if (turn % 2 == 0) {
             this.current_player = p2;
+            this.other_player = p1;
         } else {
             this.current_player = p1;
+            this.other_player = p2;
         }
     }
 
-    public void checkWin() {
+    public String getWinner() {
         if (p1.getMoney() > p2.getMoney()) {
-            this.winner = "PLAYER 1";
+            return p1.getName();
         } else if (p1.getMoney() < p2.getMoney()) {
-            this.winner = "PLAYER 2";
-        } else {
-            this.winner = "TIE";
+            return p2.getName();
         }
+        return "TIE";
     }
 
     public int getTurn() {
         return this.turn;
     }
+
+    public boolean isOver() {
+        return this.turn > 20;
+    }
+
 }

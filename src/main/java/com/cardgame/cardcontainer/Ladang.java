@@ -44,11 +44,26 @@ public class Ladang {
     }
     public static String getKeyFromIdx(Pair<Integer, Integer> idx) {
         ArrayList<String> letters = new ArrayList<>(List.of("A", "B", "C", "D", "E"));
-        int num = idx.getValue() - 1;
+        int num = idx.getValue() + 1;
         return letters.get(idx.getKey()) + "0" + num;
+    }
+    public static String getKeyFromIdx(int col, int row) {
+        ArrayList<String> letters = new ArrayList<>(List.of("A", "B", "C", "D", "E"));
+        int num = row + 1;
+        return letters.get(col) + "0" + num;
     }
     public HashMap<String, Harvestable> getLadang() {
         return this.ladang;
+    }
+    public void addItem(String key, String item) {
+        Harvestable h = this.ladang.get(key);
+        h.addItem(item);
+        this.ladang.put(key, h);
+    }
+    public void destroy(String key) {
+        if (!this.ladang.get(key).getItems().contains("PROTECT")) {
+            this.ladang.remove(key);
+        }
     }
     public void feedAnimal(String key, Product product) {
         Animal animal = (Animal) this.ladang.get(key);
@@ -59,16 +74,26 @@ public class Ladang {
         Harvestable card = this.ladang.remove(key);
         return card.harvest();
     }
-    public void destroy(String key) {
+    public void remove(String key) {
         this.ladang.remove(key);
     }
     public void agePlants() {
         for (Map.Entry<String, Harvestable> v : this.ladang.entrySet()) {
             if (v.getValue() instanceof Plant) {
-                Plant p = (Plant) v;
+                Plant p = (Plant) v.getValue();
                 p.setAge(p.getAge() + 1);
                 this.ladang.put(v.getKey(), p);
             }
         }
+    }
+
+    public static Harvestable castToHarvestable(Card c) {
+        if (c instanceof Animal) {
+            return (Animal) c;
+        }
+        if (c instanceof Plant) {
+            return (Plant) c;
+        }
+        return null;
     }
 }

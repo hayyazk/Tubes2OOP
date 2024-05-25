@@ -21,4 +21,7 @@ module com.cardgame {
 
     opens com.cardgame.player to javafx.graphics;
     exports com.cardgame.player;
+
+    opens com.cardgame.store to javafx.graphics;
+    exports com.cardgame.store;
 }

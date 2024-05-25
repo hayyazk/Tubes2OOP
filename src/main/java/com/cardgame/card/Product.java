@@ -12,6 +12,13 @@ public class Product extends Card{
         this.type = type;
     }
 
+    public Product(Product other) {
+        super(other);
+        this.price = other.getPrice();
+        this.addsWeight = other.getAddsWeight();
+        this.type = other.getType();
+    }
+
     public int getPrice() {
         return price;
     }
@@ -22,7 +29,7 @@ public class Product extends Card{
         return type;
     }
 
-    public String details() {
+    public String getDetails() {
         return String.format("Harga: %d", this.price);
     }
 }

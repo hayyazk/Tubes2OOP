@@ -49,7 +49,7 @@ public class Player {
         this.money = money;
     }
     public ArrayList<String> shuffleDeck() {
-        return this.deck.shuffle();
+        return this.deck.shuffle(this.activeDeck.getAvailable());
     }
     public void addToDeck(ArrayList<String> list) {
         this.deck.add(list);
@@ -60,56 +60,55 @@ public class Player {
     public void removeFromActiveDeck(String key) {
         this.activeDeck.remove(key);
     }
-    public void addToLadang(String key, Harvestable card) {
-        this.ladang.add(key, card);
+    public void addToLadang(String key, Harvestable card, String deckKey) {
+        if (this.isLadangSlotEmpty(key)) {
+            this.ladang.add(key, card);
+            this.removeFromActiveDeck(deckKey);
+        }
     }
-    public void addToLadang(String key, Product card) {
-        this.ladang.feedAnimal(key, card);
+    public void relocateLadang(String target, Harvestable card, String source) {
+        if (this.isLadangSlotEmpty(target)) {
+            this.ladang.add(target, card);
+            this.removeFromLadang(source);
+        }
     }
-    public void addToLadang(String key, Item card) {
+    public void addToLadang(String key, Product card, String deckKey) {
         Card c = this.ladang.get(key);
-        if (card.getKode().equals("ACCELERATE")) {
-            if (c instanceof Animal) {
-                ((Animal) c).addItem(card.getKode());
-                ((Animal) c).setWeight(((Animal) c).getWeight() + 8);
-                this.ladang.add(key, (Animal) c);
-            } else if (c instanceof Plant) {
-                ((Plant) c).addItem(card.getKode());
-                ((Plant) c).setAge(((Plant) c).getAge() + 2);
-            }
-        } else if (card.getKode().equals("DELAY")) {
-            if (c instanceof Animal) {
-                ((Animal) c).addItem(card.getKode());
-                ((Animal) c).setWeight(((Animal) c).getWeight() - 5);
-                this.ladang.add(key, (Animal) c);
-            } else if (c instanceof Plant) {
-                ((Plant) c).addItem(card.getKode());
-                ((Plant) c).setAge(((Plant) c).getAge() - 2);
-            }
-        } else if (card.getKode().equals("INSTANT_HARVEST")) {
-            this.harvest(key);
-        } else if (card.getKode().equals("DESTROY")) {
-            if (c instanceof Animal) {
-                if (!((Animal) c).getItems().contains("PROTECT")) {
-                    this.ladang.destroy(key);
-                }
-            } else if (c instanceof Plant) {
-                if (!((Plant) c).getItems().contains("PROTECT")) {
-                    this.ladang.destroy(key);
-                }
-            }
-        } else if (card.getKode().equals("PROTECT")) {
-            if (c instanceof Animal) {
-                ((Animal) c).addItem(card.getKode());
-            } else if (c instanceof Plant) {
-                ((Plant) c).addItem(card.getKode());
+        if (c instanceof Animal) {
+            if (((Animal) c).getAnimalType().equals(card.getType()) || ((Animal) c).getAnimalType().equals("OMNIVORE")) {
+                this.ladang.feedAnimal(key, card);
+                this.removeFromActiveDeck(deckKey);
             }
         }
+    }
+    public boolean addToLadang(String key, Item card) {
+        boolean success = false;
+        String kode = card.getKode();
+        if (kode.equals("ACCELERATE") || kode.equals("PROTECT") || kode.equals("TRAP") || kode.equals("DELAY")) {
+            this.ladang.addItem(key, card.getKode());
+            success = true;
+        } else if (card.getKode().equals("INSTANT_HARVEST")) {
+            this.harvest(key);
+            success = true;
+        } else if (card.getKode().equals("DESTROY")) {
+            this.ladang.destroy(key);
+            success = true;
+        }
+        return success;
+    }
+    public void removeFromLadang(String key) {
+        this.ladang.remove(key);
+    }
+    public boolean isLadangSlotEmpty(String key) {
+        return this.ladang.get(key) == null;
     }
     public void harvest(String key) {
         this.activeDeck.add(this.ladang.harvest(key));
     }
     public void agePlants() {
         this.ladang.agePlants();
+    }
+    public void addItem(String key) {
+
     }
 }
