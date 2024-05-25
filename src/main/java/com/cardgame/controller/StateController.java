@@ -60,6 +60,12 @@ public class StateController {
         }
     }
 
+    @FXML
+    public void save() {
+        this.state.saveState();
+        this.state.savePlayers();
+    }
+
     public void initDragDrop() {
         this.this_ladang.setOnDragOver(e -> {
             if (e.getDragboard().hasString()) {

@@ -6,6 +6,8 @@ import com.cardgame.cardcontainer.Deck;
 import com.cardgame.cardcontainer.Ladang;
 
 import java.util.ArrayList;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 public class Player {
     private String name;

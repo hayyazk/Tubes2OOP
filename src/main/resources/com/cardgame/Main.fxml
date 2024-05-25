@@ -230,7 +230,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                   </Button>
-                  <Button alignment="CENTER" layoutX="31.0" layoutY="194.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #2fce66;" text="SAVE" textAlignment="CENTER">
+                  <Button alignment="CENTER" layoutX="31.0" layoutY="194.0" mnemonicParsing="false" onAction="#save" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #2fce66;" text="SAVE" textAlignment="CENTER">
                      <VBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
